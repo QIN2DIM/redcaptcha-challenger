@@ -1,0 +1,103 @@
+[project]
+name = "redcaptcha-challenger"
+version = "0.0.1"
+dependencies = [
+    "camoufox[geoip]>=0.4.11",
+    "httpx[http2]>=0.28.1",
+    "loguru>=0.7.3",
+    "numpy>=2.3.1",
+    "pillow>=11.3.0",
+    "playwright>=1.53.0",
+    "pydantic-settings>=2.10.1",
+    "tenacity>=9.1.2",
+    "typer>=0.16.0",
+]
+requires-python = ">=3.12"
+authors = [
+    { name = "QIN2DIM", email = "yaoqinse@gmail.com" },
+    { name = "Bingjie Yan", email = "bj.yan.pa@qq.com" }
+]
+description = "👾 Gracefully face the Xiaohongshu RedCaptcha"
+readme = "README.md"
+license = "GPL-3.0-or-later"
+keywords = ["redcaptcha", "redcaptcha-challenger", "redcaptcha-solver", "agent", "large language model"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Image Processing",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+    "Topic :: Software Development",
+]
+
+
+[project.urls]
+Homepage = "https://github.com/QIN2DIM/redcaptcha-challenger"
+Documentation = "https://github.com/QIN2DIM/redcaptcha-challenger"
+Repository = "https://github.com/QIN2DIM/redcaptcha-challenger.git"
+Issues = "https://github.com/QIN2DIM/redcaptcha-challenger/issues"
+Changelog = "https://github.com/QIN2DIM/redcaptcha-challenger/blob/master/CHANGELOG.md"
+
+[project.optional-dependencies]
+server = [
+    "fastapi[all]>=0.115.12",
+]
+dataset = [
+    "typer"
+]
+
+#[project.scripts]
+#red = "redcaptcha_challenger.cli.main:main"
+
+# https://packaging.python.org/en/latest/key_projects/#hatch
+# https://hatch.pypa.io/latest/config/build/#build-system
+[build-system]
+requires = ["hatchling", "uv-dynamic-versioning"]
+build-backend = "hatchling.build"
+
+# https://hatch.pypa.io/latest/config/build/#explicit-selection
+[tool.hatch.build.targets.sdist]
+only-include = ["src/redcaptcha_challenger"]
+exclude = [
+    "_archive/*.py",
+    'tests/',
+    'docker/',
+    'examples/'
+]
+
+# https://hatch.pypa.io/latest/config/build/#packages
+[tool.hatch.build.targets.wheel]
+packages = ["src/redcaptcha_challenger"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310", "py311", "py312", "py313"]
+skip-string-normalization = true
+exclude = "_archive|.venv|docs/.*\\.ipynb"
+
+[tool.hatch.version]
+source = "uv-dynamic-versioning"
+
+[tool.uv-dynamic-versioning]
+vcs = "git"
+style = "pep440"
+bump = true
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "ipykernel>=6.29.5",
+    "ipywidgets>=8.1.7",
+    "jupyterlab-language-pack-zh-cn>=4.4.post0",
+    "notebook>=7.4.3",
+    "pip>=25.1.1",
+    "pytest>=8.4.0",
+    "pytest-asyncio>=1.0.0",
+    "uv-dynamic-versioning>=0.8.2",
+]
